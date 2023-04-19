@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  labels:
+    app: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      terminationGracePeriodSeconds: 5
+      containers:
+      - name: redis
+        image: redis
+        imagePullPolicy: IfNotPresent
+        command: ["redis-server", "--save", "300", "1"]
+        livenessProbe:
+          exec:
+            command: ["redis-cli", "info"]
+          initialDelaySeconds: 5
+          periodSeconds: 300
+          failureThreshold: 1
+        startupProbe:
+          exec:
+            command: ["redis-cli", "info"]
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          failureThreshold: 5
+        ports:
+        - containerPort: 6379
+        resources:
+          limits:
+            cpu: "0.5"
+            memory: "200Mi"
+        volumeMounts:
+          - mountPath: /data
+            name: redis
+            subPath: data
+      volumes:
+      - name: redis
+        persistentVolumeClaim:
+          claimName: redis

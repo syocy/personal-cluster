@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  labels:
+    app: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      terminationGracePeriodSeconds: 5
+      containers:
+      - name: postgres
+        image: postgres
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          exec:
+            command: ["psql", "-U", "postgres", "-c", "\\l"]
+          initialDelaySeconds: 5
+          periodSeconds: 300
+          failureThreshold: 1
+        startupProbe:
+          exec:
+            command: ["psql", "-U", "postgres", "-c", "\\l"]
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          failureThreshold: 5
+        env:
+        - name: POSTGRES_PASSWORD
+          value: pass
+        - name: PGDATA
+          value: /data
+        ports:
+        - containerPort: 5432
+        resources:
+          limits:
+            cpu: "0.5"
+            memory: "200Mi"
+        volumeMounts:
+        - mountPath: /data
+          name: postgres
+          subPath: pgdata
+      volumes:
+      - name: postgres
+        persistentVolumeClaim:
+          claimName: postgres

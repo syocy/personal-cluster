@@ -1,0 +1,17 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: personal-cluster
+nodes:
+- role: control-plane
+  extraMounts:
+  - hostPath: ./var/redis
+    containerPath: /var/personal-cluster/redis
+  - hostPath: ./var/postgres
+    containerPath: /var/personal-cluster/postgres
+  extraPortMappings:
+  # redis
+  - containerPort: 30379
+    hostPort: 6379
+  # postgres
+  - containerPort: 30432
+    hostPort: 5432
