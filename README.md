@@ -34,21 +34,6 @@ make cluster-unpause
 
 ## Services in Cluster
 
-### Redis
-
-Create & Test
-
-```shell
-make redis-apply
-redis-cli -c info
-```
-
-Delete
-
-```shell
-make redis-delete
-```
-
 ### Postgres
 
 Create & Test
@@ -62,6 +47,21 @@ Delete
 
 ```shell
 make postgres-delete
+```
+
+### Redis
+
+Create & Test
+
+```shell
+make redis-apply
+redis-cli -c info
+```
+
+Delete
+
+```shell
+make redis-delete
 ```
 
 ## Troubleshoot
