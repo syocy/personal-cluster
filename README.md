@@ -1,10 +1,12 @@
 # personal-cluster
 
+A local Kubernetes cluster.
+
 ## Prerequisites
 
 * kubectl
-* kustomize v5+
-* kind
+* [kustomize v5+](https://github.com/kubernetes-sigs/kustomize)
+* [kind](https://kind.sigs.k8s.io/)
 
 ## Cluster Operation
 
