@@ -6,7 +6,7 @@
 * kustomize v5+
 * kind
 
-## Prepare Cluster
+## Cluster Operation
 
 Create
 
@@ -18,6 +18,18 @@ Delete
 
 ```shell
 make cluster-delete
+```
+
+Pause
+
+```shell
+make cluster-pause
+```
+
+Unpause
+
+```shell
+make cluster-unpause
 ```
 
 ## Services in Cluster
