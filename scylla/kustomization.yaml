@@ -1,0 +1,23 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- deployment.yaml
+- service.yaml
+- persistentvolume.yaml
+- persistentvolumeclaim.yaml
+
+images:
+- name: scylla
+  newName: scylladb/scylla
+  newTag: "5.1"
+
+configMapGenerator:
+- name: scylla-config
+  files:
+  - config/scylla.yaml
+
+generatorOptions:
+  disableNameSuffixHash: true
+  labels:
+    app: scylla

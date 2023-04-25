@@ -8,6 +8,8 @@ nodes:
     containerPath: /var/personal-cluster/redis
   - hostPath: ./var/postgres
     containerPath: /var/personal-cluster/postgres
+  - hostPath: ./var/scylla
+    containerPath: /var/personal-cluster/scylla
   extraPortMappings:
   # redis
   - containerPort: 30379
@@ -15,3 +17,8 @@ nodes:
   # postgres
   - containerPort: 30432
     hostPort: 5432
+  # scylla
+  - containerPort: 30042
+    hostPort: 9042
+  - containerPort: 31000
+    hostPort: 10000

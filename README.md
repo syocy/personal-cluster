@@ -66,6 +66,21 @@ Delete
 make redis-delete
 ```
 
+### Scylla
+
+Create & Test
+
+```shell
+make scylla-apply
+cqlsh
+```
+
+Delete
+
+```shell
+make scylla-delete
+```
+
 ## Troubleshoot
 
 `kubectl get`

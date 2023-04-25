@@ -1,6 +1,8 @@
 CLUSTER = personal-cluster
 CONTEXT = kind-$(CLUSTER)
 
+## cluster
+
 .PHONY: cluster-create
 cluster-create:
 	kind create cluster --config cluster.yaml
@@ -17,6 +19,8 @@ cluster-pause:
 cluster-unpause:
 	docker unpause $(CLUSTER)-control-plane
 
+## redis
+
 .PHONY: redis-apply
 redis-apply:
 	bash -c 'kubectl apply --context=$(CONTEXT) -f <(kustomize build redis)'
@@ -29,6 +33,8 @@ redis-delete:
 redis-restart:
 	kubectl rollout restart deployment/redis
 
+## postgres
+
 .PHONY: postgres-apply
 postgres-apply:
 	bash -c 'kubectl apply --context=$(CONTEXT) -f <(kustomize build postgres)'
@@ -40,3 +46,17 @@ postgres-delete:
 .PHONY: postgres-restart
 postgres-restart:
 	kubectl rollout restart deployment/postgres
+
+## scylla
+
+.PHONY: scylla-apply
+scylla-apply:
+	bash -c 'kubectl apply --context=$(CONTEXT) -f <(kustomize build scylla)'
+
+.PHONY: scylla-delete
+scylla-delete:
+	bash -c 'kubectl delete --context=$(CONTEXT) -f <(kustomize build scylla)'
+
+.PHONY: scylla-restart
+scylla-restart:
+	kubectl rollout restart deployment/scylla

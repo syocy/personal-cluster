@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scylla
+  labels:
+    app: scylla
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: scylla
+  template:
+    metadata:
+      labels:
+        app: scylla
+    spec:
+      terminationGracePeriodSeconds: 5
+      containers:
+      - name: scylla
+        image: scylla
+        imagePullPolicy: IfNotPresent
+        args: [
+          "--developer-mode", "1",
+          "--smp", "1",
+          "--options-file", "/config/scylla.yaml"
+        ]
+        ports:
+        - containerPort: 9042
+          name: cqlsh
+        - containerPort: 10000
+          name: alternator
+        resources:
+          limits:
+            cpu: "1.5"
+            memory: "200Mi"
+        volumeMounts:
+        - mountPath: /var/lib/scylla
+          name: scylla
+          subPath: data
+        - mountPath: /config
+          name: scylla-config
+      volumes:
+      - name: scylla
+        persistentVolumeClaim:
+          claimName: scylla
+      - name: scylla-config
+        configMap:
+          name: scylla-config
+          items:
+          - key: "scylla.yaml"
+            path: "scylla.yaml"
+
