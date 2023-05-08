@@ -11,6 +11,9 @@ nodes:
   - hostPath: ./var/scylla
     containerPath: /var/personal-cluster/scylla
   extraPortMappings:
+  # dashboard
+  - containerPort: 30843
+    hostPort: 8443
   # redis
   - containerPort: 30379
     hostPort: 6379

@@ -19,6 +19,16 @@ cluster-pause:
 cluster-unpause:
 	docker unpause $(CLUSTER)-control-plane
 
+## dashboard
+
+.PHONY: dashboard-apply
+dashboard-apply:
+	bash -c 'kubectl apply --context=$(CONTEXT) -f <(kustomize build dashboard)'
+
+.PHONY: dashboard-delete
+dashboard-delete:
+	bash -c 'kubectl delete --context=$(CONTEXT) -f <(kustomize build dashboard)'
+
 ## redis
 
 .PHONY: redis-apply
