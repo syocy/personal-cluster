@@ -4,6 +4,8 @@ name: personal-cluster
 nodes:
 - role: control-plane
   extraMounts:
+  - hostPath: ./var/grafana
+    containerPath: /var/personal-cluster/grafana
   - hostPath: ./var/redis
     containerPath: /var/personal-cluster/redis
   - hostPath: ./var/postgres
@@ -14,6 +16,9 @@ nodes:
   # dashboard
   - containerPort: 30843
     hostPort: 8443
+  # grafana
+  - containerPort: 30300
+    hostPort: 3000
   # redis
   - containerPort: 30379
     hostPort: 6379

@@ -29,6 +29,16 @@ dashboard-apply:
 dashboard-delete:
 	bash -c 'kubectl delete --context=$(CONTEXT) -f <(kustomize build dashboard)'
 
+## grafana
+
+.PHONY: grafana-apply
+grafana-apply:
+	bash -c 'kubectl apply --context=$(CONTEXT) -f <(kustomize build grafana)'
+
+.PHONY: grafana-delete
+grafana-delete:
+	bash -c 'kubectl delete --context=$(CONTEXT) -f <(kustomize build grafana)'
+
 ## redis
 
 .PHONY: redis-apply
