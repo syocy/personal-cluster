@@ -36,6 +36,34 @@ make cluster-unpause
 
 ## Services in Cluster
 
+### Kubernetes Dashboard
+
+Create & Test
+
+```shell
+make dashboard-apply # See localhost:8443
+```
+
+Delete
+
+```shell
+make dashboard-delete
+```
+
+### Grafana
+
+Create & Test
+
+```shell
+make grafana-apply # See localhost:3000
+```
+
+Delete
+
+```shell
+make grafana-delete
+```
+
 ### Postgres
 
 Create & Test
